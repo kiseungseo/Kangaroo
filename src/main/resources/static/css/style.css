@@ -254,74 +254,6 @@ h6 {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
-/* KangarooCard */
-
-.kangaroocard {
-    background-color: white;
-}
-
-.kangaroocard {
-  margin-bottom: 30px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-
-.kangaroocard-header,
-.card-footer {
-  border-color: #ebeef4;
-  background-color: #fff;
-  color: #798eb3;
-  padding: 15px;
-}
-
-.kangaroocard-title {
-  padding: 20px 0 15px 0;
-  font-size: 18px;
-  font-weight: 500;
-  color: #012970;
-  font-family: "Poppins", sans-serif;
-}
-
-.kangaroocard-title span {
-  color: #899bbd;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.kangaroocard-body {
-  padding: 0 20px 20px 20px;
-}
-
-.kangaroocard-img-overlay {
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
-.kangarooform-control {
-   display: bule;
-    width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--bs-body-color);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: var(--bs-body-bg);
-    background-clip: padding-box;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out,box-shadow .15s;
-
-    /* 이전에 .input-group>.form-control에 적용하려던 스타일을 여기에 추가 */
-    position: relative;
-    flex: 1 1 auto;
-    width: 1%;
-    min-width: 0;
-}
-
-
 /* Alerts */
 .alert-heading {
   font-weight: 500;
@@ -1277,9 +1209,6 @@ h6 {
     max-width: 50%;
   }
 }
-
-
-
 
 /*--------------------------------------------------------------
 # Footer

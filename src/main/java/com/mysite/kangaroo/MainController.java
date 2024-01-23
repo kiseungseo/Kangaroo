@@ -14,28 +14,6 @@ public class MainController {
     public String main() {
         return "kangaroo_main";
     }
-    
-//    @GetMapping("/login")
-//    public String login() {
-//        return "user/login";
-//    }
-    
-   @GetMapping("/signup")
-   public String signup() {
-       return "user/sginup";
-    }
-    
-    @GetMapping("/album")
-    public String album() {
-        return "album/album_main";
-    }
-    
-    @GetMapping("/albumtest")
-    public String albumtest() {
-        return "album/albumtest";
-    }
-    
-   
 }
 
 
