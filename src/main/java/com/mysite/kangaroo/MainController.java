@@ -16,10 +16,15 @@ public class MainController {
     }
     
     @GetMapping("/login")
-    public String index() {
+    public String login() {
         return "login/kangaroo_login";
     }
+   
     
+    @GetMapping("/signup")
+    public String signup() {
+        return "login/kangaroo_signup";
+    }
     
 }
 
