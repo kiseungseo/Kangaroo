@@ -14,6 +14,13 @@ public class MainController {
     public String main() {
         return "kangaroo_main";
     }
+    
+    @GetMapping("/login")
+    public String index() {
+        return "login/kangaroo_login";
+    }
+    
+    
 }
 
 
