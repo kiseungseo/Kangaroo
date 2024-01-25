@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+</head>
+
+<body>
+	<!--<th:block th:replace="album/albumnavbar :: navbarFragment"></th:block>-->
+    <th:block th:replace="albumConfig/sidebar :: sidebarFragment"></th:block>
+
+    <div class="content">
+    	<th:block layout:fragment="content"></th:block>
+	</div>
+
+    <th:block th:replace="albumConfig/script :: scriptFragment"></th:block>
+</body>
+
+</html>
