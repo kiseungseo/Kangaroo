@@ -26,6 +26,20 @@ public class MainController {
         return "login/kangaroo_signup";
     }
     
+    @GetMapping("/album")
+    public String album() {
+        return "album/album_main";
+    }
+    
+    @GetMapping("/albumtest")
+    public String albumtest() {
+        return "album/albumtest";
+    }
+    
+    @GetMapping("/logintest")
+    public String logintest() {
+        return "login/logintest";
+    }
 }
 
 
