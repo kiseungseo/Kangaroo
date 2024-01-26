@@ -17,13 +17,13 @@ public class MainController {
     
     @GetMapping("/login")
     public String login() {
-        return "login/kangaroo_login";
+        return "user/login";
     }
    
     
     @GetMapping("/signup")
     public String signup() {
-        return "login/kangaroo_signup";
+        return "user/sginup";
     }
     
     @GetMapping("/album")
