@@ -20,6 +20,9 @@ public class UserDTO {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+	
+	@Column(nullable = false)
+    private String userId;
 
     @Column(unique = true)
     private String username;
@@ -28,6 +31,13 @@ public class UserDTO {
 
     @Column(unique = true)
     private String email;
+     
+    @Column(unique = true)
+    private String phone;
+    
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
     
 
 }
