@@ -15,15 +15,14 @@ public class MainController {
         return "kangaroo_main";
     }
     
-    @GetMapping("/login")
-    public String login() {
-        return "user/login";
-    }
-   
+//    @GetMapping("/login")
+//    public String login() {
+//        return "user/login";
+//    }
     
-    @GetMapping("/signup")
-    public String signup() {
-        return "user/sginup";
+   @GetMapping("/signup")
+   public String signup() {
+       return "user/sginup";
     }
     
     @GetMapping("/album")
@@ -36,10 +35,7 @@ public class MainController {
         return "album/albumtest";
     }
     
-    @GetMapping("/logintest")
-    public String logintest() {
-        return "login/logintest";
-    }
+   
 }
 
 
