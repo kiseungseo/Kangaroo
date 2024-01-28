@@ -1,57 +1,112 @@
 <html layout:decorate="~{albumConfig/layout}">
 <head>
     <style th:inline="text">
+
+        .write-wrap{
+            border-bottom:1px solid black;
+        }
         .write-title-wrap, .write-title-wrap .input-title{
             width: 100%;
             max-width: 1100px;
             height: 50px;
             box-sizing: border-box;
+            margin-bottom:10px;
         }
 
-        .input-title {
-            padding: 10px;
-            color: #555;
-            border:0;
-            font-size:21px;
+        .write-content-wrap {
+            margin-top:15px;
         }
-
-        .input-title:focus {
-            outline:none;
-        }
-
         .write-content-wrap, .write-content-wrap .write-content {
             width:100%;
             max-width:1100px;
-            height:500px;
             border:0;
-            padding-left: 5px;
             font-size: 16px;
             color : #555;
         }
+
+        .write-content-wrap .write-content{
+            padding: 10px 0 0 10px;
+            resize: none;
+            overflow-y: hidden;
+            height:auto;
+        }
+
         .write-content-wrap .write-content:focus {
             outline:none;
         }
 
+        .buttonArea {
+            height:40px;
+            margin-bottom:20px;
+            margin-top:10px;
+        }
+
+        .write-finish-button {
+            bottom: 10px;
+            right: 10px;
+            text-align: right;
+            float:right;
+
+            width:80px;
+            height:40px;
+            line-height: 40px;
+            font-size:20px;
+
+            color: #FFF;
+            background-color:#50bcdf;
+            border-radius: 30px;
+            text-align:center;
+
+        }
+
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            //작성 버튼 처리
+            $(".write-finish-button").click(function() {
+                let content = $('.write-content').val();
+
+                if(content.length<5){
+                    alert('내용을 5글자 이상 입력해주세요.');
+                }else{
+                    alert('작성이 완료되었습니다.');
+
+                }
+            });
+
+            //textarea 높이조절
+            $('textarea').on('keyup', function (e) {
+                $(this).css('height', 'auto');
+                $(this).height(this.scrollHeight - 15);
+            });
+        });
+
+    </script>
     <title>앨범</title>
 </head>
 <main role="main" class="main-content" layout:fragment="content">
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="develop-alert">
             <p>회원 연결 해야됨</p>
-            <br/>
-            <div class="write-title-wrap">
-                <input class="input-title" placeholder="제목">
-            </div>
+        </div>
+        <div class="row justify-content-center write-wrap">
             <div class="write-content-wrap">
                 <textarea class="write-content" placeholder="소중한 일상을 기록해보세요!"></textarea>
             </div>
+            <div class="write-title-wrap">
+                <div class="buttonArea">
+                    <button class="write-finish-button">저장</button>
+                </div>
+            </div>
         </div>
     </div>
-    <button class="write-finish-button">저장</button>
 </main>
-<script>
-    $(document).
 
-</script>
 </html>
