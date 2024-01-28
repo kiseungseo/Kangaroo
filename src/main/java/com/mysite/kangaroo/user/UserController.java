@@ -1,6 +1,5 @@
 package com.mysite.kangaroo.user;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+	private final UserService userService;
 
     @GetMapping("/signup")
     public String signup(UserCreateForm userCreateForm) {
@@ -33,19 +32,15 @@ public class UserController {
                     "2개의 패스워드가 일치하지 않습니다.");
             return "user/signup";
         }
-        try {
-            userService.create(userCreateForm.getUsername(), 
-                    userCreateForm.getEmail(), userCreateForm.getPassword1());
-        }catch(DataIntegrityViolationException e) {
-            e.printStackTrace();
-            bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
-            return "user/signup";
-        }catch(Exception e) {
-            e.printStackTrace();
-            bindingResult.reject("signupFailed", e.getMessage());
-            return "user/signup";
-        }
 
-        return "redirect:/";
+        userService.create(userCreateForm.getUsername(), 
+                userCreateForm.getEmail(), userCreateForm.getPassword1());
+
+        return "redirect:/user/login";
     }
+    
+  @GetMapping("/login")
+  public String login() {
+     return "user/login";
+  }
 }
