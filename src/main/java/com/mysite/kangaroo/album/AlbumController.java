@@ -13,6 +13,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/album")
 public class AlbumController {
+    // 앨범글쓰기 들어가기
+    @GetMapping("/writealbum")
+    public String getWriteAlbum(Model model) {
+        return "album/album_write";
+    }
+
+    public String PostWriteAlbum(Model model) {
+        return "album/album_main";
+    }
     @GetMapping("/main")
     public String albumMain(Model model){
         //샘플 데이터

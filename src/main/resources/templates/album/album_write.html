@@ -1,0 +1,57 @@
+<html layout:decorate="~{albumConfig/layout}">
+<head>
+    <style th:inline="text">
+        .write-title-wrap, .write-title-wrap .input-title{
+            width: 100%;
+            max-width: 1100px;
+            height: 50px;
+            box-sizing: border-box;
+        }
+
+        .input-title {
+            padding: 10px;
+            color: #555;
+            border:0;
+            font-size:21px;
+        }
+
+        .input-title:focus {
+            outline:none;
+        }
+
+        .write-content-wrap, .write-content-wrap .write-content {
+            width:100%;
+            max-width:1100px;
+            height:500px;
+            border:0;
+            padding-left: 5px;
+            font-size: 16px;
+            color : #555;
+        }
+        .write-content-wrap .write-content:focus {
+            outline:none;
+        }
+
+    </style>
+    <title>앨범</title>
+</head>
+<main role="main" class="main-content" layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <p>회원 연결 해야됨</p>
+            <br/>
+            <div class="write-title-wrap">
+                <input class="input-title" placeholder="제목">
+            </div>
+            <div class="write-content-wrap">
+                <textarea class="write-content" placeholder="소중한 일상을 기록해보세요!"></textarea>
+            </div>
+        </div>
+    </div>
+    <button class="write-finish-button">저장</button>
+</main>
+<script>
+    $(document).
+
+</script>
+</html>

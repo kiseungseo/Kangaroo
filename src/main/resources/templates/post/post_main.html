@@ -1,21 +1,21 @@
 <html lang="ko" layout:decorate="~{layout}">
 <th:block layout:fragment="content">
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Kangaroo</title>
+    <title>Kangaroo</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-	<!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy2niAYFxm3HAi7DpWqj2U+8pZl+8fBx6" crossorigin="anonymous">
-</head>
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy2niAYFxm3HAi7DpWqj2U+8pZl+8fBx6" crossorigin="anonymous">
+  </head>
 
-<body>
-  
-   <main id="main" class="main">
+  <body>
+
+  <main id="main" class="main">
 
     <div class="product-tab">
       <div class="tab-item">
@@ -32,7 +32,11 @@
           <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
             <div class="specification-table">
               <!-- 게시글 섹션에 표시할 정보 및 데이터 추가 -->
-              안녕
+              <div class="card" th:each="post : ${postList}">
+                <div class="card-body">
+                  <div th:text="${post.content}"></div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -48,10 +52,17 @@
           <div class="tab-pane fade" id="tab-3" role="tabpanel">
             <div class="people-sorting-option">
               <!-- 사람순 섹션에 표시할 정보 및 데이터 추가 -->
-              안녕3
+              <div class="card" th:each="user : ${userList}">
+                <div class="card-body">
+                  <div class="alert alert-light border-light alert-dismissible fade show" role="alert">
+                    <div th:text="${user.username}"></div>
+                    <button type="button" class="bi bi-envelope"></button>
+                    <button type="button" class="bi bi-person-fill-add"></button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
           <!-- 사진순 섹션 -->
           <div class="tab-pane fade" id="tab-4" role="tabpanel">
             <div class="photo-sorting-option">
@@ -62,7 +73,6 @@
         </div>
       </div>
     </div>
-
   </main><!-- End #main -->
 
   <!-- Bootstrap JS and Popper.js -->
@@ -82,7 +92,7 @@
       });
     });
   </script>
-</body>
+  </body>
 
 </th:block>
 </html>
