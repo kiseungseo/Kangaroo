@@ -1,5 +1,7 @@
 <html layout:decorate="~{albumConfig/layout}">
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <style th:inline="text">
 
         .write-wrap{
@@ -72,12 +74,32 @@
             //작성 버튼 처리
             $(".write-finish-button").click(function() {
                 let content = $('.write-content').val();
+                let token = $("meta[name='_csrf']").attr("content");
+                let header = $("meta[name='_csrf_header']").attr("content");
+
+                //임시 아이디
+                let testId = 'Moon';
 
                 if(content.length<5){
                     alert('내용을 5글자 이상 입력해주세요.');
+                }else if(testId == '' || testId == null){
+                    alert('로그인 에러');
                 }else{
-                    alert('작성이 완료되었습니다.');
-
+                    $.ajax({
+                        beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                        },
+                        type: "POST",
+                        url: "/album/writealbum",
+                        contentType: 'application/json',
+                        data: JSON.stringify({ testId: testId, content: content }),
+                        success: function(response) {
+                            alert('작성이 완료되었습니다.');
+                        },
+                        error: function() {
+                            alert('서버 오류');
+                        }
+                    }); //ajax끝
                 }
             });
 
