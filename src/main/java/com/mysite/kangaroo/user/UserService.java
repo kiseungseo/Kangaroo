@@ -1,6 +1,6 @@
 package com.mysite.kangaroo.user;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,15 @@ public class UserService {
 
 	private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserDTO create(String username, String email, String password) {
+    
+    //회원가입
+    public UserDTO create(String userId, String email, String password) {
         UserDTO user = new UserDTO();
-        user.setUsername(username);
+        user.setUserId(userId);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         this.userRepository.save(user);
         return user;
     }
+    
 }

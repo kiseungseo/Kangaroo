@@ -24,43 +24,40 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
     	// 보안 필터 체인 설정
-        http
-            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-            	// 모든 요청 허용
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll() 
-                // 특정 경로 접근 허용
-            	.requestMatchers("/img/**", "/js/**", "/css/**", "/fonts/**", "/sass/**", "/chat/**").permitAll()) 
-            
-            // CSRF 보호 예외 설정
-            .csrf((csrf) -> csrf
-                    .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))) 
-            
-            // 헤더 설정
-            .headers((headers) -> headers
-                    .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))) 
-            
-            // 로그인 페이지 경로 설정
-            .formLogin((formLogin) -> formLogin
-                    .loginPage("/user/login") 
-                    // 로그인 성공 후 리다이렉트 경로 설정
-                    .defaultSuccessUrl("/")) 
-            
-            // 로그아웃 경로 설정
-            .logout((logout) -> logout
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")) 
-                    // 로그아웃 성공 후 리다이렉트 경로 설정
-                    .logoutSuccessUrl("/") 
-                    // 로그아웃 시 세션 무효화 설정
-                    .invalidateHttpSession(true)) 
-        ;
+    	http
+    	.authorizeHttpRequests(
+                authorize -> authorize
+                
+                .requestMatchers("/img/**", "/js/**", "/css/**", "/fonts/**", "/sass/**", "/chat/**").permitAll() // 소스 접근 허용
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                .anyRequest().authenticated()
+            )  
+        .csrf(cors -> cors
+     		   .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+     		   .disable() // 뭐가 안 되실 경우 주석 해제 후 시도(2)
+         )
+        .headers(h -> h
+                .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+         )
+        .formLogin(fLogin -> fLogin
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/kangaroo/main")
+                .usernameParameter("userId")
+                .passwordParameter("password")
+         )
+        .logout(lo -> lo
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutSuccessUrl("/user/login")
+                .invalidateHttpSession(true)
+         );
         return http.build();
     }
     
     
     @Bean
     // 비밀번호 인코더 Bean 설정
-    public PasswordEncoder passwordEncoder() { 
+    PasswordEncoder passwordEncoder() { 
         return new BCryptPasswordEncoder();
     }
     
