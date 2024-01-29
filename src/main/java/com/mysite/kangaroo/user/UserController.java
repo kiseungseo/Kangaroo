@@ -1,5 +1,8 @@
 package com.mysite.kangaroo.user;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,15 +46,33 @@ public class UserController {
                     "2개의 패스워드가 일치하지 않습니다.");
             return "user/signup";
         }
-
+        
+        // 이름 필드 검증
+        if (userCreateForm.getUserName() == null || userCreateForm.getUserName().trim().isEmpty()) {
+            bindingResult.rejectValue("userName", "userName.required", "이름은 필수항목입니다.");
+            return "user/signup";
+        }
+        
         // 이메일 필드 검증
         if (userCreateForm.getEmail() == null || userCreateForm.getEmail().trim().isEmpty()) {
             bindingResult.rejectValue("email", "email.required", "이메일은 필수항목입니다.");
             return "user/signup";
         }
+        
+        // 생년월일 필드 검증
+        if (userCreateForm.getBirth() == null) {
+            bindingResult.rejectValue("birth", "birth.required", "생년월일은 필수항목입니다.");
+            return "user/signup";
+        }
+        
+        // 핸드폰번호 필드 검증
+        if (userCreateForm.getPhone() == null || userCreateForm.getPhone().trim().isEmpty()) {
+            bindingResult.rejectValue("phone", "phone.required", "생년월일은 필수항목입니다.");
+            return "user/signup";
+        }
 
-        userService.create(userCreateForm.getUserId(), 
-                userCreateForm.getEmail(), userCreateForm.getPassword1());
+        userService.create(userCreateForm.getUserId(), userCreateForm.getEmail(), userCreateForm.getPassword1(), 
+        					userCreateForm.getUserName(), userCreateForm.getBirth(),userCreateForm.getPhone());
 
         return "redirect:/user/login";
     }

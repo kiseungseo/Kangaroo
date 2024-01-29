@@ -2,6 +2,8 @@ package com.mysite.kangaroo.user;
 
 
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -20,8 +22,17 @@ public class UserCreateForm {
 
     @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
     private String password2;
+    
+    @NotEmpty(message = "이름은 필수항목입니다.")
+    private String userName;
 
     @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email
     private String email;
+    
+    @NotEmpty(message = "생년월일은 필수항목입니다.")
+    private LocalDate birth; 
+    
+    @NotEmpty(message = "핸드폰번호는 필수항목입니다.")
+    private String phone;
 }
