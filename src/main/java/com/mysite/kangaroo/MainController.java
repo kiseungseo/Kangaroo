@@ -35,7 +35,10 @@ public class MainController {
         return "album/albumtest";
     }
     
-   
+    @GetMapping("/profile")
+    public String profile() {
+        return "user/profile";
+     }
 }
 
 

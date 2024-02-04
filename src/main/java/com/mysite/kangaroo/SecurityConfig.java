@@ -29,6 +29,7 @@ public class SecurityConfig {
                 authorize -> authorize
                 
                 .requestMatchers("/img/**", "/js/**", "/css/**", "/fonts/**", "/sass/**", "/chat/**").permitAll() // 소스 접근 허용
+                .requestMatchers("/profile/**").authenticated() // '/profile/**' 경로는 인증된 사용자만 접근 가능
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                 .anyRequest().authenticated()
             )  

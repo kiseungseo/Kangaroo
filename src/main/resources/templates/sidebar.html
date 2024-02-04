@@ -7,23 +7,29 @@
 	 <!-- ======= Sidebar ======= -->
 	<aside id="sidebar" class="sidebar">
 		<section class="section profile">
-			<div class="row">
-				<div class="col-xl-12">
-					<div class="card">
-						<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-							<img src="/img/winter.jpg" alt="Profile" class="rounded-circle">
-							<h2>윈터</h2>
-							<div class="social-links mt-2">
-								<a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-								<a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-								<a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-								<a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                <img class="avatar-img"
+     th:src="${userProfile != null and userProfile.profilePicture != null ? userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}">
+
+
+                    <h2>윈터</h2>
+                    <p th:text="${userProfile != null ? userProfile.toString() : 'userProfile is null'}"></p>
+                    <p th:text="${userProfile != null ? userProfile.statusMessage : 'statusMessage is null'}"></p>
+
+                    <div class="social-links mt-2">
+                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 		<ul class="sidebar-nav" id="sidebar-nav">
 		
 			<li class="nav-item">
