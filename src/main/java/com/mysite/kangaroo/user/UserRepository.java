@@ -9,6 +9,4 @@ public interface UserRepository extends JpaRepository<UserDTO, String> {
 	//사용자 ID조회
 	Optional<UserDTO> findByuserId(String userId);
 	
-	
-	
 }

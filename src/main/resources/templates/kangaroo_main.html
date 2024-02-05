@@ -4,7 +4,12 @@
 		
 		 <div class="avatar avatar-xl">
 				                <!-- 프로필 사진이 없는 경우 기본 사진을 표시 -->
-				                <img src="" th:src="${userProfile != null and userProfile.profilePicture != null ? userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}" alt="..." class="avatar-img rounded-circle" style="width: 200px; height: 200px;">
+				                <!-- 사용자 정보 출력 -->
+    <p th:text="${user.userId}"></p>
+    <p th:text="${user.email}"></p>
+    <p th:text="${user.userName}"></p>
+    <p th:text="${user.birth}"></p>
+    <p th:text="${user.phone}"></p>
 				            </div>
 	</div>
 	

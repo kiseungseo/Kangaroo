@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainController {
     
+	
+	//테스트용 컨트롤러입니다
     @GetMapping("/main")
     public String main() {
         return "kangaroo_main";

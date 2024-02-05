@@ -11,14 +11,16 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                <img class="avatar-img"
-     th:src="${userProfile != null and userProfile.profilePicture != null ? userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}">
-
-
-                    <h2>윈터</h2>
-                    <p th:text="${userProfile != null ? userProfile.toString() : 'userProfile is null'}"></p>
-                    <p th:text="${userProfile != null ? userProfile.statusMessage : 'statusMessage is null'}"></p>
-
+                
+                <!--테스트-->
+                <div class="avatar avatar-xl">
+				    <img th:src="${userProfile != null and userProfile.profilePicture != null ? '/uploads/' + userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}" alt="..." class="avatar-img rounded-circle">
+				</div>
+                    <h2 th:text="${user.userName}+ 님"></h2>
+                      <p th:text="${userProfile.statusMessage}"></p>
+					<div th:if="${userProfile == null}">
+					    <p>로그인하지 않았습니다.</p>
+					</div>
                     <div class="social-links mt-2">
                         <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                         <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -91,10 +93,10 @@
 			</li><!-- End Charts Nav -->
 		
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="users-profile.html">
-					<i class="bi bi-person"></i>
-					<span>Profile</span>
-				</a>
+			    <a class="nav-link collapsed" href="/user/profile">
+			        <i class="bi bi-person"></i>
+			        <span>Profile</span>
+			    </a>
 			</li><!-- End Profile Page Nav -->
 		
 			<li class="nav-item">

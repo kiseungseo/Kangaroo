@@ -1,5 +1,6 @@
 package com.mysite.kangaroo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // 스프링 설정 클래스 선언
 @Configuration 
@@ -20,7 +23,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 // 메소드 수준 보안 활성화
 @EnableMethodSecurity(prePostEnabled = true) 
 
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer{
+	
+	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
     	// 보안 필터 체인 설정
@@ -41,12 +48,15 @@ public class SecurityConfig {
                 .addHeaderWriter(new XFrameOptionsHeaderWriter(
                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
          )
+        //로그인
         .formLogin(fLogin -> fLogin
                 .loginPage("/user/login")
-                .defaultSuccessUrl("/kangaroo/main")
+                .defaultSuccessUrl("/user/")
+                .successHandler(customAuthenticationSuccessHandler) // 이 부분 추가
                 .usernameParameter("userId")
                 .passwordParameter("password")
          )
+        //로그아웃
         .logout(lo -> lo
                 .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                 .logoutSuccessUrl("/user/login")
@@ -55,6 +65,12 @@ public class SecurityConfig {
         return http.build();
     }
     
+    //c: 필터
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:/C:/uploads/");
+    }
     
     @Bean
     // 비밀번호 인코더 Bean 설정
