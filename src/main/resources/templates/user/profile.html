@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="icon" th:href="@{/album/favicon.ico}">
+	<title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
+	
+	<!-- Simple bar CSS -->
+	<link rel="stylesheet" th:href="@{/album/css/simplebar.css}">
+	
+	<!-- Fonts CSS -->
+	<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	
+	<!-- Icons CSS -->
+	<link rel="stylesheet" th:href="@{/album/css/feather.css}">
+	
+	<!-- Date Range Picker CSS -->
+	<link rel="stylesheet" th:href="@{/album/css/daterangepicker.css}">
+	
+	<!-- App CSS -->
+	<link rel="stylesheet" th:href="@{/album/css/app-light.css}" id="lightTheme">
+	<link rel="stylesheet" th:href="@{/album/css/app-dark.css}" id="darkTheme" disabled>
+	
+	<style>
+    .custom-button {
+        width: 80%; 
+        margin: auto;
+    }
+
+    .gray-button {
+        background-color: #6c757d;	
+    }
+     .custom-button {
+        margin-top: 10px; /* 버튼과 버튼 사이의 간격 */
+    }
+    .card {
+        padding-bottom: 20px; /* div의 하단 패딩 */
+    }
+     .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;  /* 버튼들을 수직 방향으로 중앙에 배치합니다. */
+    }
+    .custom-button {
+        width: 45%;
+    }
+</style>
+</head>
+
+<body class="light " style="background-color: #f6f9ff;">
+<div class="wrapper vh-100">
+	<div class="row align-items-center h-100 ">
+		<div class="col-lg-7 col-md-10 col-10 mx-auto card shadow mb-6" >
+			<div class="row" >
+				<div class="col-lg-6 col-md-6 text-center">
+					    <!-- 프로필 등록 제목 -->
+					    <h5 class="mb-0 mt-5">프로필 등록</h5>
+					    <hr class="my-4">
+					    <div class="mx-auto text-center my-4">
+				        <!-- 프로필 사진 -->
+				        <div class="form-group mb-3" data-toggle="modal" data-target="#verticalModal">
+				            <div class="avatar avatar-xl">
+							    <img th:src="${userProfile != null and userProfile.profilePicture != null ? '/uploads/' + userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}" alt="..." class="avatar-img rounded-circle">
+							</div>
+				            
+				           <h1 th:text="${user.userName}">User Name</h1>
+							<p th:text="${user.email}">Email</p>
+				        </div>
+				        <div class="col-md-12 mb-4">
+				            <div class="card shadow">
+				                <div class="card-body">
+				                    <!-- 사용자 상태 메시지 제목 -->
+				                    <p class="card-title"><strong>사용자님의 상태 메세지</strong></p>
+				                    <!-- 사용자 상태 메시지 -->
+				                    <p class="card-text" th:text="${userProfile != null and userProfile.statusMessage != null ? userProfile.statusMessage : '상태메세지입니다.'}"></p>
+				                    <!-- 프로필 추가 버튼 -->
+				                    <button type="button" class="btn mb-2 btn-outline-success" data-toggle="modal" data-target="#verticalModal"> 프로필 추가 </button>
+				                    <!-- 프로필 추가 팝업창 -->
+				                    <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+				                        <div class="modal-dialog modal-dialog-centered" role="document">
+				                            <div class="modal-content">
+				                                <div class="modal-header">
+				                                    <!-- 팝업창 제목 -->
+				                                    <h5 class="modal-title" id="verticalModalTitle">프로필</h5>
+				                                    <!-- 팝업창 닫기 버튼 -->
+				                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                                        <span aria-hidden="true">&times;</span>
+				                                    </button>
+				                                </div>
+				                                <div class="modal-body">
+				                                    <!-- 프로필 업로드 폼 -->
+				                                    <form id="uploadForm" action="/user/profile/upload" method="post" enctype="multipart/form-data">
+				                                        <!-- 프로필 사진 -->
+				                                        <div class="form-group mb-3">
+				                                           <div class="avatar avatar-xl">
+															    <img id="preview" th:src="${userProfile != null and userProfile.profilePicture != null ? '/uploads/' + userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}" alt="..." class="avatar-img rounded-circle">
+															</div>
+				                                        </div>
+				                                        <!-- 파일 업로드 -->
+				                                        <div class="form-group mb-3">
+				                                            <div class="custom-file">
+				                                                <input type="file" class="custom-file-input" id="customFile" name="file">
+				                                                <label class="custom-file-label" for="customFile">프로필사진등록</label>
+				                                            </div>
+				                                        </div>
+				                                        <!-- 상태 메시지 입력 -->
+														<div class="form-group">
+														    <label for="message-text" class="col-form-label">상태메세지:</label>
+														    <textarea class="form-control" id="message-text" name="message" th:text="${userProfile != null and userProfile.statusMessage != null ? userProfile.statusMessage : ''}"></textarea>
+														</div>
+
+				                                        <!-- 팝업창 닫기 버튼, 저장 버튼 -->
+				                                        <div class="modal-footer">
+				                                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">닫기</button>
+				                                            <button type="submit" class="btn mb-2 btn-primary">저장</button>
+				                                        </div>
+				                                    </form>
+				                                </div>
+				                                <div class="modal-footer">
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+		 	<div class="col-lg-6 col-md-6">
+				<div class="my-4">
+					<strong class="mb-0">보안</strong>
+					<p>공개여부</p>
+						<div class="list-group mb-5 shadow">
+							<div class="list-group-item">
+								<div class="row align-items-center">
+									<div class="col">
+										<strong class="mb-0">Unusual activity notifications</strong>
+										<p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+									</div> <!-- .col -->
+									<div class="col-auto">
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" id="alert1" checked>
+											<span class="custom-control-label"></span>
+										</div>
+									</div> <!-- .col -->
+								</div> <!-- .row -->
+							</div> <!-- .list-group-item -->
+							<div class="list-group-item">
+								<div class="row align-items-center">
+									<div class="col">
+										<strong class="mb-0">Unauthorized financial activity</strong>
+										<p class="text-muted mb-0">Fusce lacinia elementum eros, sed vulputate urna eleifend nec.</p>
+									</div> <!-- .col -->
+									<div class="col-auto">
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" id="alert2">
+											<span class="custom-control-label"></span>
+										</div>
+									</div> <!-- .col -->
+								</div> <!-- .row -->
+							</div> <!-- .list-group-item -->
+						</div> <!-- .list-group -->
+					<hr class="my-4">
+					<strong class="mb-0">시스탬</strong>
+					<p>시스탬보안</p>
+					<div class="list-group mb-5 shadow">
+						<div class="list-group-item">
+							<div class="row align-items-center">
+								<div class="col">
+									<strong class="mb-0">Notify me about new features and updates</strong>
+									<p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+								</div> <!-- .col -->
+								<div class="col-auto">
+									<div class="custom-control custom-switch">
+										<input type="checkbox" class="custom-control-input" id="alert3" checked>
+										<span class="custom-control-label"></span>
+									</div>
+								</div> <!-- .col -->
+							</div> <!-- .row -->
+						</div> <!-- .list-group-item -->
+						<div class="list-group-item">
+							<div class="row align-items-center">
+								<div class="col">
+									<strong class="mb-0">Notify me by email for latest news</strong>
+									<p class="text-muted mb-0">Nulla et tincidunt sapien. Sed eleifend volutpat elementum.</p>
+								</div> <!-- .col -->
+								<div class="col-auto">
+								<div class="custom-control custom-switch">
+									<input type="checkbox" class="custom-control-input" id="alert4" checked>
+									<span class="custom-control-label"></span>
+								</div>
+							</div> <!-- .col -->
+							</div> <!-- .row -->
+						</div> <!-- .list-group-item -->
+					</div> <!-- .list-group -->
+				</div> <!-- /.card-body -->
+				
+				<div class="button-container">
+				<button class="btn btn-lg btn-primary btn-block custom-button" onclick="location.href='/user/sginup'">뒤로</button>
+				<button class="btn btn-lg btn-primary btn-block custom-button" onclick="location.href='/user/login'">완료</button>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>	
+	<script th:src="@{/album/js/jquery.min.js}"></script>
+    <script th:src="@{/album/js/popper.min.js}"></script>
+    <script th:src="@{/album/js/moment.min.js}"></script>
+    <script th:src="@{/album/js/bootstrap.min.js}"></script>
+    <script th:src="@{/album/js/simplebar.min.js}"></script>
+    <script th:src="@{/album/js/daterangepicker.js}"></script>
+    <script th:src="@{/album/js/jquery.stickOnScroll.js}"></script>
+    <script th:src="@{/album/js/tinycolor-min.js}"></script>
+    <script th:src="@{/album/js/config.js}"></script>
+    <script th:src="@{/album/js/apps.js}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    
+	<!--파일 선택 시 파일 이름 표시--> 
+	<script>
+	    document.getElementById('customFile').addEventListener('change', function(e) {
+	        var fileName = e.target.files[0].name;
+	        document.querySelector('.custom-file-label').innerText = fileName;
+	    });
+	</script>
+	
+    <!--이미지 선택시 출력--> 
+    <script>
+	    document.getElementById("customFile").addEventListener("change", function(event) {
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	            document.getElementById("preview").src = e.target.result;
+	        };
+	        reader.readAsDataURL(event.target.files[0]);
+	    });
+	</script>
+    
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+</body>
+</html>

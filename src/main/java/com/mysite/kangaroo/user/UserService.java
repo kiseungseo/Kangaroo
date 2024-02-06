@@ -1,12 +1,14 @@
 package com.mysite.kangaroo.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -32,6 +34,24 @@ public class UserService {
         this.userRepository.save(user);
         return user;
     }
+    
+    //유저 리스트
+    public List<UserDTO> getList(){
+        return this.userRepository.findAll();
+    }
+    
+    //카카오로그인
+    @Transactional
+    public Long createUser(String email) {
+        UserDTO user = UserDTO.builder()
+                .email(email)
+                .build();
+
+        userRepository.save(user);
+        log.info("새로운 회원 저장 완료");
+        return user.id;
+    }
+    
     
     public boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
