@@ -59,10 +59,13 @@
 							<label>
 							<input type="checkbox" value="remember-me"> Save ID</label>
 						</div>
-						<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+						<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
 					</form>
 					<br>
-					<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/user/signup'">Sign Up</button>
+					<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/user/signup'">회원가입</button>
+					<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={여기에 REST API KEY를 넣습니다}&redirect_uri=https%3A%2F%2Flocalhost%3A8080%2Foauth">
+					    Kakao 로그인
+					</a>
 				</div> <!-- .card -->
 			</div> <!-- ./col -->
 		</div> <!-- .row -->

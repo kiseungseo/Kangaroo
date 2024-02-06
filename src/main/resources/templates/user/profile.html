@@ -33,17 +33,31 @@
     }
 
     .gray-button {
-        background-color: #6c757d;
+        background-color: #6c757d;	
+    }
+     .custom-button {
+        margin-top: 10px; /* 버튼과 버튼 사이의 간격 */
+    }
+    .card {
+        padding-bottom: 20px; /* div의 하단 패딩 */
+    }
+     .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;  /* 버튼들을 수직 방향으로 중앙에 배치합니다. */
+    }
+    .custom-button {
+        width: 45%;
     }
 </style>
 </head>
 
 <body class="light " style="background-color: #f6f9ff;">
 <div class="wrapper vh-100">
-	<div class="row align-items-center h-100">
-		<div class="col-lg-6 col-md-10 col-10 mx-auto">
-			<div class="row">
-				<div class="col-lg-6 col-md-6">
+	<div class="row align-items-center h-100 ">
+		<div class="col-lg-7 col-md-10 col-10 mx-auto card shadow mb-6" >
+			<div class="row" >
+				<div class="col-lg-6 col-md-6 text-center">
 					    <!-- 프로필 등록 제목 -->
 					    <h5 class="mb-0 mt-5">프로필 등록</h5>
 					    <hr class="my-4">
@@ -186,8 +200,11 @@
 						</div> <!-- .list-group-item -->
 					</div> <!-- .list-group -->
 				</div> <!-- /.card-body -->
+				
+				<div class="button-container">
 				<button class="btn btn-lg btn-primary btn-block custom-button" onclick="location.href='/user/sginup'">뒤로</button>
 				<button class="btn btn-lg btn-primary btn-block custom-button" onclick="location.href='/user/login'">완료</button>
+			</div>
 			</div>
 		</div>
 	</div>
