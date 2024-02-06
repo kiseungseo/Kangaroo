@@ -9,31 +9,39 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/kangaroo")
 @Controller
 public class MainController {
-
+    
+	
+	//테스트용 컨트롤러입니다
     @GetMapping("/main")
     public String main() {
         return "kangaroo_main";
     }
-
+    
 //    @GetMapping("/login")
 //    public String login() {
 //        return "user/login";
 //    }
-
-    @GetMapping("/signup")
-    public String signup() {
-        return "user/sginup";
+    
+   @GetMapping("/signup")
+   public String signup() {
+       return "user/sginup";
     }
-
+    
     @GetMapping("/album")
     public String album() {
         return "album/album_main";
     }
-
+    
     @GetMapping("/albumtest")
     public String albumtest() {
         return "album/albumtest";
     }
-
-
+    
+    @GetMapping("/profile")
+    public String profile() {
+        return "user/profile";
+     }
 }
+
+
+
