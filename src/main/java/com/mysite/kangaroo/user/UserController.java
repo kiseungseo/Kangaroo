@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mysite.kangaroo.entity.UserDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -125,10 +128,10 @@ public class UserController {
 
         UserDTO sessionUser = (UserDTO) session.getAttribute("user");
             
-        if (!userService.isLoggedIn(session)) {
-            // 사용자가 로그인 상태가 아니면 로그인 페이지로 리다이렉트
-            return "redirect:/user/login";
-        }
+//        if (!userService.isLoggedIn(session)) {
+//            // 사용자가 로그인 상태가 아니면 로그인 페이지로 리다이렉트
+//            return "redirect:/user/login";
+//        }
 
         // 데이터베이스에서 사용자 프로필 정보 조회
         UserProfile userProfile = userProfileRepository.findByUser_UserId(sessionUser.getUserId()).orElse(null);
@@ -187,7 +190,6 @@ public class UserController {
             userProfileRepository.save(userProfile);
 
             // 상태 메시지 업데이트 후 세션 업데이트
-            // 변경된 부분: 사용자 정보를 다시 조회하여 세션을 최신 상태로 업데이트
             UserDTO updatedUser = userRepository.findByuserId(user.getUserId()).orElse(null);
             if (updatedUser != null) {
                 session.setAttribute("user", updatedUser);

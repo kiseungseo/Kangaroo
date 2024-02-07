@@ -29,6 +29,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	
+	//scope
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+	
 	//security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
@@ -56,6 +59,15 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    
+    //api
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    
+	//OAuth 2.0(카카오)
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    
+    //리스폰 출력
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	
 }
 

@@ -1,5 +1,7 @@
 package com.mysite.kangaroo.user;
 
+import com.mysite.kangaroo.entity.UserDTO;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

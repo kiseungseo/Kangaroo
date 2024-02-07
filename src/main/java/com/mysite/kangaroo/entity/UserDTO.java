@@ -1,4 +1,4 @@
-package com.mysite.kangaroo.user;
+package com.mysite.kangaroo.entity;
 
 
 import jakarta.persistence.CascadeType;
@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+
+import com.mysite.kangaroo.user.UserProfile;
 
 @Getter
 @Setter

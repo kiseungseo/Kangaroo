@@ -16,6 +16,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.mysite.kangaroo.outseideuser.OAuth2LoginSuccessHandler;
+import com.mysite.kangaroo.outseideuser.OAuth2UserService;
+
+
 // 스프링 설정 클래스 선언
 @Configuration 
 // 웹 보안 설정 활성화
@@ -26,44 +30,61 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig implements WebMvcConfigurer{
 	
 	@Autowired
+	private OAuth2UserService oAuth2useService;
+	
+	@Autowired
+	private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+	
+	@Autowired
 	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 	
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
-    	// 보안 필터 체인 설정
-    	http
-    	.authorizeHttpRequests(
-                authorize -> authorize
-                
-                .requestMatchers("/img/**", "/js/**", "/css/**", "/fonts/**", "/sass/**", "/chat/**").permitAll() // 소스 접근 허용
-                .requestMatchers("/profile/**").authenticated() // '/profile/**' 경로는 인증된 사용자만 접근 가능
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                .anyRequest().authenticated()
-            )  
-        .csrf(cors -> cors
-     		   .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
-     		   .disable() // 뭐가 안 되실 경우 주석 해제 후 시도(2)
-         )
-        .headers(h -> h
-                .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-         )
-        //로그인
-        .formLogin(fLogin -> fLogin
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/user/")
-                .successHandler(customAuthenticationSuccessHandler) // 이 부분 추가
-                .usernameParameter("userId")
-                .passwordParameter("password")
-         )
-        //로그아웃
-        .logout(lo -> lo
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/user/login")
-                .invalidateHttpSession(true)
-         );
-        return http.build();
-    }
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
+	    // 보안 필터 체인 설정
+	    http
+	        .authorizeHttpRequests(
+	            authorize -> authorize
+	            .requestMatchers("/img/**", "/js/**", "/css/**", "/fonts/**", "/sass/**", "/chat/**").permitAll() // 소스 접근 허용
+	            .requestMatchers("/profile/**").authenticated() // '/profile/**' 경로는 인증된 사용자만 접근 가능
+	            .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+	            .anyRequest().authenticated()
+	        )  
+		    .csrf(cors -> cors
+		        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+		        .disable() // 뭐가 안 되실 경우 주석 해제 후 시도(2)
+		     )
+		    .headers(h -> h
+		            .addHeaderWriter(new XFrameOptionsHeaderWriter(
+		            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+		     )
+		   
+		    //로그인
+		    .formLogin(fLogin -> fLogin
+		            .loginPage("/user/login")
+		            .defaultSuccessUrl("/user/")
+		            .successHandler(customAuthenticationSuccessHandler) // 이 부분 추가
+		            .usernameParameter("userId")
+		            .passwordParameter("password")
+		     )
+		    //로그아웃
+		    .logout(lo -> lo
+		            .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+		            .logoutSuccessUrl("/user/login")
+		            .invalidateHttpSession(true)
+		     )
+		    //구글 로그인
+		    .oauth2Login(oauth2 -> oauth2
+		            .loginPage("/loginForm")
+		            .defaultSuccessUrl("/")
+		            .successHandler(oAuth2LoginSuccessHandler) // 이 부분 추가
+		            .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+		                .userService(oAuth2useService)
+		            )
+		        );
+	     
+		    return http.build();
+	}
+
     
     //c: 필터
     @Override

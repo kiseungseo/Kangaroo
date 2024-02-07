@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.mysite.kangaroo.user.UserDTO;
+import com.mysite.kangaroo.entity.UserDTO;
 import com.mysite.kangaroo.user.UserRepository;
 
 import jakarta.servlet.ServletException;
