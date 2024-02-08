@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mysite.kangaroo.entity.Posts;
-import com.mysite.kangaroo.entity.UserDTO;
+import com.mysite.kangaroo.entity.Users;
 import com.mysite.kangaroo.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class PostController {
 	//검색화면 및 게시글메인
 	@GetMapping("/main")
 	public String postMain(Model model) {
-		List<UserDTO> userList = this.userService.getList();
+		List<Users> userList = this.userService.getList();
 		List<Posts> postList = this.postService.getList();
 		model.addAttribute("userList",userList);
 		model.addAttribute("postList",postList);

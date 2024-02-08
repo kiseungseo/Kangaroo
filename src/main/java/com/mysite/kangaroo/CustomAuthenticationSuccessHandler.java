@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.mysite.kangaroo.entity.UserDTO;
+import com.mysite.kangaroo.entity.Users;
 import com.mysite.kangaroo.user.UserRepository;
 
 import jakarta.servlet.ServletException;
@@ -26,11 +26,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        // Authentication 객체에서 로그인한 사용자의 username을 가져옵니다.
+        // Authentication 객체에서 로그인한 사용자의 username을 가져온
         String username = authentication.getName();
 
-        // username으로 UserDTO를 조회합니다.
-        UserDTO user = userRepository.findByuserId(username).orElse(null);
+        // username으로 Users를 조회합니다.
+        Users user = userRepository.findByUserId(username).orElse(null);
 
         // 사용자 정보를 세션에 저장합니다.
         HttpSession session = request.getSession();

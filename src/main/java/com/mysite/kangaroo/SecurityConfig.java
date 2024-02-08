@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.mysite.kangaroo.outseideuser.OAuth2LoginSuccessHandler;
-import com.mysite.kangaroo.outseideuser.OAuth2UserService;
+import com.mysite.kangaroo.user.UserService;
 
 
 // 스프링 설정 클래스 선언
@@ -29,14 +29,21 @@ import com.mysite.kangaroo.outseideuser.OAuth2UserService;
 
 public class SecurityConfig implements WebMvcConfigurer{
 	
-	@Autowired
-	private OAuth2UserService oAuth2useService;
+	    private UserService userService;
+	    
+	    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+	    
+	    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	    
 	
-	@Autowired
-	private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 	
-	@Autowired
-	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	    public SecurityConfig(UserService userService,
+                OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler,
+                CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+				this.userService = userService;
+				this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
+				this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+				}
 	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
@@ -74,11 +81,11 @@ public class SecurityConfig implements WebMvcConfigurer{
 		     )
 		    //구글 로그인
 		    .oauth2Login(oauth2 -> oauth2
-		            .loginPage("/loginForm")
+		            .loginPage("/user/loginForm")
 		            .defaultSuccessUrl("/")
 		            .successHandler(oAuth2LoginSuccessHandler) // 이 부분 추가
 		            .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
-		                .userService(oAuth2useService)
+		                .userService(userService)
 		            )
 		        );
 	     
@@ -93,12 +100,7 @@ public class SecurityConfig implements WebMvcConfigurer{
                 .addResourceLocations("file:/C:/uploads/");
     }
     
-    @Bean
-    // 비밀번호 인코더 Bean 설정
-    PasswordEncoder passwordEncoder() { 
-        return new BCryptPasswordEncoder();
-    }
-    
+   
     @Bean
     // 인증 매니저 Bean 설정
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception { 

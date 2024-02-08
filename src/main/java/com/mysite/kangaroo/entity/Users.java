@@ -1,49 +1,78 @@
 package com.mysite.kangaroo.entity;
 
-import java.time.LocalDateTime;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+import java.time.LocalDate;
+
 @Getter
 @Setter
+@Entity
+@Table(name = "user")
 public class Users {
-	
-    @Id
-    @Column(length = 40)
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id", unique = true)
     private String userId;
 
-    @Column(length = 20)
-    private String userName;
-    
-    @Column(length = 320)
-    private String email;
-    
-    @Column(length = 64)
+    @Column(name = "password")
     private String password;
 
-    @Column
-    private LocalDateTime birthday;
-    
-    @Column
-    private char gender;
-    
-    @Column(length = 13)
-    private String phone;
-   
-    @Column
-    private LocalDateTime createdAt;
-    
-    @Column
-    private boolean secret;
-    
-    @Column
-    private boolean friend;
+    @Column(name = "email")
+    private String email;
 
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "birth")
+    private LocalDate birth;
+
+    @Column(name = "phone")
+    private String phone;
+
+    // 추가된 필드들
+    @Column(name = "name")
+    private String name; // 유저 이름
+
+    @Column(name = "role")
+    private String role; // 유저 권한 (일반 유저, 관리자)
+
+    @Column(name = "provider")
+    private String provider; // 공급자 (google, facebook ...)
+
+    @Column(name = "provider_id")
+    private String providerId; // 공급자 아이디
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserProfile userProfile;
+
+    // 생성자
+    public Users(String userId, String password, String email, String userName, LocalDate birth, String phone, 
+                   String name, String role, String provider, String providerId) {
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+        this.userName = userName;
+        this.birth = birth;
+        this.phone = phone;
+        this.name = name;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
+
+    // 기본 생성자
+    public Users() {
+    }
 }

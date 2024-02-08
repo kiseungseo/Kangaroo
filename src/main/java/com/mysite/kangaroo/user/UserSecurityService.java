@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.mysite.kangaroo.entity.UserDTO;
+import com.mysite.kangaroo.entity.Users;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,18 +20,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class UserSecurityService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+	private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Optional<UserDTO> _userDTO = this.userRepository.findByuserId(userId);
-        UserDTO userDTO;
+        Optional<Users> _userDTO = this.userRepository.findByUserId(userId);
+        Users userDTO;
         
         if (_userDTO.isPresent()) {
             userDTO = _userDTO.get();
         } else {
             // 사용자 ID에 해당하는 사용자가 없을 때의 처리. 예를 들어, 새로운 UserDetails 객체를 생성하거나, 기본 사용자 정보를 사용할 수 있음.
-            userDTO = new UserDTO();
+            userDTO = new Users();
             // 필요한 필드를 설정하세요.
         }
         

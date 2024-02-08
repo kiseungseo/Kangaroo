@@ -14,7 +14,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         // 로그인 성공 후 이동할 URL
-        String targetUrl = "/private";
+        String targetUrl = "/user/private";
         response.sendRedirect(targetUrl);
     }
 }

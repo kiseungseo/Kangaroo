@@ -1,6 +1,4 @@
-package com.mysite.kangaroo.user;
-
-import com.mysite.kangaroo.entity.UserDTO;
+package com.mysite.kangaroo.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,9 +10,13 @@ import lombok.Setter;
 @Table(name = "profile")
 public class UserProfile {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String user_id;
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Users user_id;
 
     @Column(name = "profile_picture")
     private String profilePicture;  // UUID로 저장됩니다.
@@ -25,5 +27,5 @@ public class UserProfile {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserDTO user;
+    private Users user;
 }

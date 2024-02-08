@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mysite.kangaroo.entity.UserDTO;
+import com.mysite.kangaroo.entity.Users;
+import com.mysite.kangaroo.entity.UserProfile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -95,7 +96,7 @@ public class UserController {
             return "user/signup";
         }
 
-        UserDTO user = userService.create(userCreateForm.getUserId(), userCreateForm.getEmail(), userCreateForm.getPassword1(), 
+        Users user = userService.create(userCreateForm.getUserId(), userCreateForm.getEmail(), userCreateForm.getPassword1(), 
                 userCreateForm.getUserName(), userCreateForm.getBirth(),userCreateForm.getPhone());
 
             // 사용자를 바로 인증합니다.
@@ -119,19 +120,15 @@ public class UserController {
         String username = userDetails.getUsername();
 
         // username으로 UserDTO를 조회합니다.
-        UserDTO user = userRepository.findByuserId(username).orElse(null);
+        Users user = userRepository.findByUserId(username).orElse(null);
 
         // 사용자 정보가 null이 아닌 경우에만 모델에 추가
         if (user != null) {
             model.addAttribute("user", user);
         }
 
-        UserDTO sessionUser = (UserDTO) session.getAttribute("user");
-            
-//        if (!userService.isLoggedIn(session)) {
-//            // 사용자가 로그인 상태가 아니면 로그인 페이지로 리다이렉트
-//            return "redirect:/user/login";
-//        }
+        Users sessionUser = (Users) session.getAttribute("user");
+
 
         // 데이터베이스에서 사용자 프로필 정보 조회
         UserProfile userProfile = userProfileRepository.findByUser_UserId(sessionUser.getUserId()).orElse(null);
@@ -162,10 +159,10 @@ public class UserController {
             }
 
             // 세션에서 사용자 정보 가져오기
-            UserDTO sessionUser = (UserDTO) session.getAttribute("user");
+            Users sessionUser = (Users) session.getAttribute("user");
 
             // 데이터베이스에서 사용자 정보 재조회
-            UserDTO user = userRepository.findByuserId(sessionUser.getUserId()).orElse(null);
+            Users user = userRepository.findByUserId(sessionUser.getUserId()).orElse(null);
             if(user == null) {
                 // 세션에 유효한 사용자 정보가 없으면 메시지를 추가하고 프로필 페이지로 리다이렉트
                 redirectAttributes.addFlashAttribute("message", "Invalid user session.");
@@ -190,7 +187,7 @@ public class UserController {
             userProfileRepository.save(userProfile);
 
             // 상태 메시지 업데이트 후 세션 업데이트
-            UserDTO updatedUser = userRepository.findByuserId(user.getUserId()).orElse(null);
+            Users updatedUser = userRepository.findByUserId(user.getUserId()).orElse(null);
             if (updatedUser != null) {
                 session.setAttribute("user", updatedUser);
             }
@@ -222,7 +219,7 @@ public class UserController {
 	    String username = userDetails.getUsername();
 
 	    // username으로 UserDTO를 조회합니다.
-	    UserDTO user = userRepository.findByuserId(username).orElse(null);
+	    Users user = userRepository.findByUserId(username).orElse(null);
 
 	    // 사용자 정보가 null이 아닌 경우에만 모델에 추가
 	    if (user != null) {
@@ -231,4 +228,19 @@ public class UserController {
 	    }
 	    return "kangaroo_main";
 	}
+	
+	//구글 로그인
+	@GetMapping("/loginForm")
+    public String home() {
+        return "user/loginForm";
+    }
+
+    @GetMapping("/private")
+    public String privatePage() {
+        return "user/privatePage";
+    }
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "user/adminPage";
+    }
 }
