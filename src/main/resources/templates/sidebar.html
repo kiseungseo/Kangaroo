@@ -16,7 +16,7 @@
                 <div class="avatar avatar-xl">
 				    <img th:src="${userProfile != null and userProfile.profilePicture != null ? '/uploads/' + userProfile.profilePicture : '/album/assets/avatars/face-1.jpg'}" alt="..." class="avatar-img rounded-circle">
 				</div>
-                    <h2 th:text="${user.userName}+ 님"></h2>
+                    <h2 th:text="${user.username}+ 님"></h2>
                       <p th:text="${userProfile.statusMessage}"></p>
 					<div th:if="${userProfile == null}">
 					    <p>로그인하지 않았습니다.</p>

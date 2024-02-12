@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mysite.kangaroo.entity.Users;
 import com.mysite.kangaroo.entity.UserProfile;
+import com.mysite.kangaroo.entity.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -128,7 +128,11 @@ public class UserController {
         }
 
         Users sessionUser = (Users) session.getAttribute("user");
-
+            
+        if (!userService.isLoggedIn(session)) {
+           // 사용자가 로그인 상태가 아니면 로그인 페이지로 리다이렉트
+           return "redirect:/user/login";
+        }
 
         // 데이터베이스에서 사용자 프로필 정보 조회
         UserProfile userProfile = userProfileRepository.findByUser_UserId(sessionUser.getUserId()).orElse(null);
@@ -229,8 +233,7 @@ public class UserController {
 	    return "kangaroo_main";
 	}
 	
-	//구글 로그인
-	@GetMapping("/loginForm")
+    @GetMapping("/loginForm")
     public String home() {
         return "user/loginForm";
     }
@@ -243,4 +246,6 @@ public class UserController {
     public String adminPage() {
         return "user/adminPage";
     }
+    
+
 }

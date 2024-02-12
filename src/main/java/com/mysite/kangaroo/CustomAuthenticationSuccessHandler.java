@@ -26,10 +26,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        // Authentication 객체에서 로그인한 사용자의 username을 가져온
+        // Authentication 객체에서 로그인한 사용자의 username을 가져옵니다.
         String username = authentication.getName();
 
-        // username으로 Users를 조회합니다.
+        // username으로 UserDTO를 조회합니다.
         Users user = userRepository.findByUserId(username).orElse(null);
 
         // 사용자 정보를 세션에 저장합니다.

@@ -43,7 +43,7 @@ public class PrincipalDetails implements OAuth2User {
     // 사용자의 이름을 반환하는 메서드
     @Override
     public String getName() {
-        return Users.getUserName();
+        return Users.getUsername();
     }
 
     // OAuth2 사용자 정보를 반환하는 메서드

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class Users {
 
 	@Id
@@ -32,8 +32,8 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "user_name")
-    private String userName;
+//    @Column(name = "name")
+//    private String userName;
 
     @Column(name = "birth")
     private LocalDate birth;
@@ -43,7 +43,7 @@ public class Users {
 
     // 추가된 필드들
     @Column(name = "name")
-    private String name; // 유저 이름
+    private String username; // 유저 이름
 
     @Column(name = "role")
     private String role; // 유저 권한 (일반 유저, 관리자)
@@ -51,22 +51,21 @@ public class Users {
     @Column(name = "provider")
     private String provider; // 공급자 (google, facebook ...)
 
-    @Column(name = "provider_id")
+    @Column(name = "provider_id", unique = true)
     private String providerId; // 공급자 아이디
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile userProfile;
 
     // 생성자
-    public Users(String userId, String password, String email, String userName, LocalDate birth, String phone, 
+    public Users(String userId, String password, String email,  LocalDate birth, String phone, 
                    String name, String role, String provider, String providerId) {
         this.userId = userId;
         this.password = password;
         this.email = email;
-        this.userName = userName;
         this.birth = birth;
         this.phone = phone;
-        this.name = name;
+        this.username = name;
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
